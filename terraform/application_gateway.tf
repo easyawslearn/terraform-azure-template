@@ -44,14 +44,14 @@ resource "azurerm_application_gateway" "app_gateway" {
   # step 4 - configure certs for the App Gateway
   ssl_certificate {
     name     = "apim-gw-cert01"
-    data     = "$gatewayCertPfxPath" # Pass file here
-    password = "Certfile password"
+    data     = base64encode("${path.module}/resources/api7/api7.outstacart.com.p12")
+    password = "welcome123"
   }
 
   ssl_certificate {
     name     = "apim-portal-cert01"
-    data     = "$portalCertPfxPath" # Pass file here
-    password = "Certfile password"
+    data     = base64encode("${path.module}/resources/portal7/portal7.outstacart.com.p12")
+    password = "welcome123"
   }
 
   # step 5 - configure HTTP listeners for the App Gateway
@@ -97,7 +97,7 @@ resource "azurerm_application_gateway" "app_gateway" {
   # step 7 - upload cert for SSL-enabled backend pool resources
   authentication_certificate {
     name = "whitelistcert1"
-    data = "$gatewayCertCerPath" # pass as input
+    data = base64encode("${path.module}/resources/api7/api7.outstacart.com.crt")
   }
 
   # step 8 - configure HTTPs backend settings for the App Gateway

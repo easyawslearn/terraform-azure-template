@@ -13,22 +13,22 @@ resource "azurerm_api_management" "api_mgmt" {
     subnet_id = azurerm_subnet.api_m_subnet.id
   }
 
-  #   hostname_configuration {
-  #        proxy {
-  #             hostname= "api7.outstacart.com"
-  #             certificate = "value"
-  #             certificate_password = "value"
-  #     }
-  #   }
+  hostname_configuration {
+    proxy {
+      host_name            = "api7.outstacart.com"
+      certificate          = base64encode("${path.module}/resources/api7/api7.outstacart.com.p12")
+      certificate_password = "welcome123"
+    }
+  }
 
-  #   hostname_configuration {
-  #    portal {
-  #             hostname= "portal7.outstacart.com"
-  #             certificate = "value"
-  #             certificate_password = "value"
-  #     }
+  hostname_configuration {
+    portal {
+      host_name            = "portal7.outstacart.com"
+      certificate          = base64encode("${path.module}/resources/portal7/portal7.outstacart.com.p12")
+      certificate_password = "welcome123"
+    }
 
-  #   }
+  }
 
 
   tags = var.tags
