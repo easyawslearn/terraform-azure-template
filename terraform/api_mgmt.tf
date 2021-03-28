@@ -1,5 +1,5 @@
 resource "azurerm_api_management" "api_mgmt" {
-  name                = "${var.api_mgmt_name}-${random_string.random.result}" 
+  name                = "${var.api_mgmt_name}-${random_string.random.result}"
   location            = azurerm_resource_group.resourse_grp.location
   resource_group_name = azurerm_resource_group.resourse_grp.name
   publisher_name      = var.publisher_name
@@ -13,25 +13,25 @@ resource "azurerm_api_management" "api_mgmt" {
     subnet_id = azurerm_subnet.api_m_subnet.id
   }
 
-#   hostname_configuration {
-#        proxy {
-#             hostname= "api7.outstacart.com"
-#             certificate = "value"
-#             certificate_password = "value"
-#     }
-#   }
+  #   hostname_configuration {
+  #        proxy {
+  #             hostname= "api7.outstacart.com"
+  #             certificate = "value"
+  #             certificate_password = "value"
+  #     }
+  #   }
 
-#   hostname_configuration {
-#    portal {
-#             hostname= "portal7.outstacart.com"
-#             certificate = "value"
-#             certificate_password = "value"
-#     }
-    
-#   }
+  #   hostname_configuration {
+  #    portal {
+  #             hostname= "portal7.outstacart.com"
+  #             certificate = "value"
+  #             certificate_password = "value"
+  #     }
+
+  #   }
 
 
-  tags= var.tags
+  tags = var.tags
 
 }
 
