@@ -16,10 +16,7 @@ resource "azurerm_api_management" "api_mgmt" {
   tags = var.tags
 
   identity {
-    type = "SystemAssigned, UserAssigned"
-    identity_ids = [
-      azurerm_user_assigned_identity.api_mgmt_user_identity.id
-    ]
+    type = "SystemAssigned"
   }
 
 }
