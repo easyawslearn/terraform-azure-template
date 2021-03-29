@@ -1,7 +1,7 @@
 # AppGateway - User Managed Identity
 
 resource "azurerm_user_assigned_identity" "api_mgmt_user_identity" {
-  name                = azurerm_api_management.api_mgmt.name
+  name                = "${var.api_mgmt_name}-${random_string.random.result}"
   resource_group_name = var.resource_group_name
   location            = var.location
   tags                = var.tags
