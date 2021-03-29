@@ -15,6 +15,13 @@ resource "azurerm_api_management" "api_mgmt" {
 
   tags = var.tags
 
+  identity {
+    type = "SystemAssigned, UserAssigned"
+    identity_ids = [
+      azurerm_user_assigned_identity.api_mgmt_user_identity.id
+    ]
+  }
+
 }
 
 resource "azurerm_api_management_custom_domain" "custom_domain" {
@@ -33,6 +40,10 @@ resource "azurerm_api_management_custom_domain" "custom_domain" {
     //      certificate          = base64encode("${path.module}/resources/portal7/portal7.outstacart.com.p12")
     //      certificate_password = "welcome123"
   }
+
+  depends_on = [
+    azurerm_role_assignment.app_gateway_user_identity_keyvault_admin
+  ]
 }
 
 resource "random_string" "random" {
