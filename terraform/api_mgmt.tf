@@ -13,26 +13,26 @@ resource "azurerm_api_management" "api_mgmt" {
     subnet_id = azurerm_subnet.api_m_subnet.id
   }
 
-  hostname_configuration {
-    proxy {
-      host_name            = "api7.outstacart.com"
-      certificate          = base64encode("${path.module}/resources/api7/api7.outstacart.com.p12")
-      certificate_password = "welcome123"
-    }
-  }
-
-  hostname_configuration {
-    portal {
-      host_name            = "portal7.outstacart.com"
-      certificate          = base64encode("${path.module}/resources/portal7/portal7.outstacart.com.p12")
-      certificate_password = "welcome123"
-    }
-
-  }
-
-
   tags = var.tags
 
+}
+
+resource "azurerm_api_management_custom_domain" "custom_domain" {
+  api_management_id = azurerm_api_management.api_mgmt.id
+
+  proxy {
+    host_name    = "api7.helloapi.uk"
+    key_vault_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
+    //      certificate          = base64encode("${path.module}/resources/api7/api7.outstacart.com.p12")
+    //      certificate_password = "welcome123"
+  }
+
+  portal {
+    host_name    = "portal7.helloapi.uk"
+    key_vault_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
+    //      certificate          = base64encode("${path.module}/resources/portal7/portal7.outstacart.com.p12")
+    //      certificate_password = "welcome123"
+  }
 }
 
 resource "random_string" "random" {
