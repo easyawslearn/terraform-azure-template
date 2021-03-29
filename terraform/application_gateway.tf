@@ -4,7 +4,7 @@ resource "azurerm_public_ip" "app_gateway_public_ip" {
   location                = azurerm_resource_group.resourse_grp.location
   resource_group_name     = azurerm_resource_group.resourse_grp.name
   sku                     = "Standard"
-  allocation_method       = "Dynamic"
+  allocation_method       = "Static"
   idle_timeout_in_minutes = 5
   ip_version              = "IPv4"
 
@@ -185,4 +185,8 @@ resource "azurerm_application_gateway" "app_gateway" {
   }
 
   tags = var.tags
+
+  depends_on = [
+    azurerm_role_assignment.app_gateway_user_identity_keyvault_admin
+  ]
 }
