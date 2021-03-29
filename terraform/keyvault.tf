@@ -15,9 +15,9 @@ resource "azurerm_role_assignment" "iam_access" {
 
   for_each = toset(data.azuread_users.user.object_ids)
 
-  scope              = azurerm_key_vault.rg_keyvault.id
-  role_definition_id = data.azurerm_role_definition.key_vault_administrator.id
-  principal_id       = each.key
+  scope                = azurerm_key_vault.rg_keyvault.id
+  role_definition_name = "Key Vault Administrator"
+  principal_id         = each.key
 }
 
 
