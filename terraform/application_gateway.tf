@@ -25,8 +25,8 @@ resource "azurerm_application_gateway" "app_gateway" {
 
   # step 11 - change App Gateway SKU and instances (# instances can be configured as required)
   sku {
-    name     = "WAF_Medium"
-    tier     = "WAF"
+    name     = "WAF_v2"
+    tier     = "WAF_v2"
     capacity = 1
   }
 
@@ -45,7 +45,7 @@ resource "azurerm_application_gateway" "app_gateway" {
   # step 3 - configure the front-end IP with the public IP endpoint
   frontend_ip_configuration {
     name                 = "frontend1"
-    public_ip_address_id = azurerm_public_ip.app_gateway_public_ip.ip_address
+    public_ip_address_id = azurerm_public_ip.app_gateway_public_ip.id
   }
 
   # step 4 - configure certs for the App Gateway
@@ -104,10 +104,10 @@ resource "azurerm_application_gateway" "app_gateway" {
   }
 
   # step 7 - upload cert for SSL-enabled backend pool resources
-  authentication_certificate {
-    name = "whitelistcert1"
-    data = azurerm_key_vault_certificate.api_mgmt_cert.certificate_data_base64
-  }
+#   authentication_certificate {
+#     name = "whitelistcert1"
+#     data = azurerm_key_vault_certificate.api_mgmt_cert.certificate_data_base64
+#   }
 
   # step 8 - configure HTTPs backend settings for the App Gateway
   backend_http_settings {
