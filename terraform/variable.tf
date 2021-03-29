@@ -63,3 +63,8 @@ variable "api_gateway_name" {
   type    = string
   default = "apim-app-gw-pdl"
 }
+
+variable "admin_user_principal" {
+  type    = string
+  default = "aws_easy_learn@hotmail.com"
+}

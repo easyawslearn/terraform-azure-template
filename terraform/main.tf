@@ -12,3 +12,5 @@ provider "azurerm" {
   # Configuration options
   features {}
 }
+
+provider "azuread" {}

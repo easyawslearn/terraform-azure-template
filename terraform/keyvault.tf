@@ -10,12 +10,15 @@ resource "azurerm_key_vault" "rg_keyvault" {
   sku_name = "standard"
 }
 
-resource "azurerm_role_assignment" "key_vault_access" {
-  name                 = "00000000-0000-0000-0000-000000000000"
-  scope                = azurerm_key_vault.rg_keyvault.id
-  role_definition_name = "Key Vault Administrator"
-  principal_id         = data.azurerm_client_config.current.object_id
+resource "azurerm_role_assignment" "iam_access" {
+
+  for_each = toset(data.azuread_users.user.object_ids)
+
+  scope              = azurerm_key_vault.rg_keyvault.id
+  role_definition_id = data.azurerm_role_definition.key_vault_administrator.id
+  principal_id       = each.key
 }
+
 
 resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
   name         = "api-mgmt-cert"
@@ -69,7 +72,4 @@ resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
     }
   }
 
-  depends_on = [
-    azurerm_role_assignment.key_vault_access
-  ]
 }
