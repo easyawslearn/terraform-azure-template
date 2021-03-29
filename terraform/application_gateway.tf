@@ -16,6 +16,13 @@ resource "azurerm_application_gateway" "app_gateway" {
   location            = azurerm_resource_group.resourse_grp.location
   resource_group_name = azurerm_resource_group.resourse_grp.name
 
+  identity {
+    type = "UserAssigned"
+    identity_ids = [
+      azurerm_user_assigned_identity.app_gateway_user_identity.id
+    ]
+  }
+
   # step 11 - change App Gateway SKU and instances (# instances can be configured as required)
   sku {
     name     = "WAF_Medium"
@@ -43,15 +50,15 @@ resource "azurerm_application_gateway" "app_gateway" {
 
   # step 4 - configure certs for the App Gateway
   ssl_certificate {
-    name     = "apim-gw-cert01"
-    key_vault_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
-        # data     = base64encode("${path.module}/resources/api7/api7.outstacart.com.p12")
-        # password = "welcome123"
+    name                = "apim-gw-cert01"
+    key_vault_secret_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
+    # data     = base64encode("${path.module}/resources/api7/api7.outstacart.com.p12")
+    # password = "welcome123"
   }
 
   ssl_certificate {
-    name     = "apim-portal-cert01"
-    key_vault_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
+    name                = "apim-portal-cert01"
+    key_vault_secret_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
     # data     = base64encode("${path.module}/resources/portal7/portal7.outstacart.com.p12")
     # password = "welcome123"
   }
