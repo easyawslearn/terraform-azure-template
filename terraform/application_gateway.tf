@@ -51,14 +51,14 @@ resource "azurerm_application_gateway" "app_gateway" {
   # step 4 - configure certs for the App Gateway
   ssl_certificate {
     name                = "apim-gw-cert01"
-    key_vault_secret_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
+    key_vault_secret_id = azurerm_key_vault_certificate.api_mgmt_cert_api7.secret_id
     # data     = base64encode("${path.module}/resources/api7/api7.outstacart.com.p12")
     # password = "welcome123"
   }
 
   ssl_certificate {
     name                = "apim-portal-cert01"
-    key_vault_secret_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
+    key_vault_secret_id = azurerm_key_vault_certificate.api_mgmt_cert_portal7.secret_id
     # data     = base64encode("${path.module}/resources/portal7/portal7.outstacart.com.p12")
     # password = "welcome123"
   }

@@ -32,14 +32,14 @@ resource "azurerm_api_management_custom_domain" "custom_domain" {
 
   proxy {
     host_name    = "api7.helloapi.uk"
-    key_vault_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
+    key_vault_id = azurerm_key_vault_certificate.api_mgmt_cert_api7.secret_id
     //      certificate          = base64encode("${path.module}/resources/api7/api7.outstacart.com.p12")
     //      certificate_password = "welcome123"
   }
 
   portal {
     host_name    = "portal7.helloapi.uk"
-    key_vault_id = azurerm_key_vault_certificate.api_mgmt_cert.secret_id
+    key_vault_id = azurerm_key_vault_certificate.api_mgmt_cert_portal7.secret_id
     //      certificate          = base64encode("${path.module}/resources/portal7/portal7.outstacart.com.p12")
     //      certificate_password = "welcome123"
   }

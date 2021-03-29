@@ -21,8 +21,8 @@ resource "azurerm_role_assignment" "iam_access" {
 }
 
 
-resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
-  name         = "api-mgmt-cert"
+resource "azurerm_key_vault_certificate" "api_mgmt_cert_api7" {
+  name         = "api-mgmt-cert-api7"
   key_vault_id = azurerm_key_vault.rg_keyvault.id
 
   certificate_policy {
@@ -66,8 +66,7 @@ resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
 
       subject_alternative_names {
         dns_names = [
-          "api7.helloapi.uk",
-          "portal7.helloapi.uk",
+          "api7.helloapi.uk"
         ]
       }
     }
@@ -76,5 +75,60 @@ resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
   depends_on = [
     azurerm_role_assignment.iam_access
   ]
+}
 
+resource "azurerm_key_vault_certificate" "api_mgmt_cert_portal7" {
+  name         = "api-mgmt-cert-portal7"
+  key_vault_id = azurerm_key_vault.rg_keyvault.id
+
+  certificate_policy {
+    issuer_parameters {
+      name = "Self"
+    }
+
+    key_properties {
+      exportable = true
+      key_size   = 2048
+      key_type   = "RSA"
+      reuse_key  = true
+    }
+
+    lifetime_action {
+      action {
+        action_type = "AutoRenew"
+      }
+
+      trigger {
+        days_before_expiry = 30
+      }
+    }
+
+    secret_properties {
+      content_type = "application/x-pkcs12"
+    }
+
+    x509_certificate_properties {
+      key_usage = [
+        "cRLSign",
+        "dataEncipherment",
+        "digitalSignature",
+        "keyAgreement",
+        "keyCertSign",
+        "keyEncipherment",
+      ]
+
+      subject            = "CN=helloapi.uk"
+      validity_in_months = 12
+
+      subject_alternative_names {
+        dns_names = [
+          "portal7.helloapi.uk"
+        ]
+      }
+    }
+  }
+
+  depends_on = [
+    azurerm_role_assignment.iam_access
+  ]
 }
