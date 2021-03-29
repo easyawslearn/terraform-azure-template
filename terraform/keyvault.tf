@@ -10,6 +10,13 @@ resource "azurerm_key_vault" "rg_keyvault" {
   sku_name = "standard"
 }
 
+resource "azurerm_role_assignment" "key_vault_access" {
+  name                 = "00000000-0000-0000-0000-000000000000"
+  scope                = azurerm_key_vault.rg_keyvault.id
+  role_definition_name = "Key Vault Administrator"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
+
 resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
   name         = "api-mgmt-cert"
   key_vault_id = azurerm_key_vault.rg_keyvault.id
@@ -61,12 +68,8 @@ resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
       }
     }
   }
-}
 
-
-resource "azurerm_role_assignment" "key_vault_access" {
-  name                 = "00000000-0000-0000-0000-000000000000"
-  scope                = azurerm_key_vault.rg_keyvault.id
-  role_definition_name = "Kay Vault Administrator"
-  principal_id         = data.azurerm_client_config.current.object_id
+  depends_on = [
+    azurerm_role_assignment.key_vault_access
+  ]
 }
