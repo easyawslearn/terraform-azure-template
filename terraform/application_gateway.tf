@@ -187,6 +187,6 @@ resource "azurerm_application_gateway" "app_gateway" {
   tags = var.tags
 
   depends_on = [
-    azurerm_role_assignment.app_gateway_user_identity_keyvault_admin
+    azurerm_role_assignment.app_gateway_user_identity_keyvault_contributor
   ]
 }
