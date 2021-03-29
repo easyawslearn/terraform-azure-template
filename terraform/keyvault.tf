@@ -1,13 +1,14 @@
 resource "azurerm_key_vault" "rg_keyvault" {
-  name                        = "${var.resource_group_name}-keyvault"
+  name                        = "${var.resource_group_name}-key1"
   location                    = azurerm_resource_group.resourse_grp.location
   resource_group_name         = azurerm_resource_group.resourse_grp.name
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
-
+  enable_rbac_authorization = true
   sku_name = "standard"
+  soft_delete_enabled = false
 }
 
 resource "azurerm_role_assignment" "iam_access" {
@@ -71,5 +72,9 @@ resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
       }
     }
   }
+
+depends_on = [
+    azurerm_role_assignment.iam_access
+  ] 
 
 }

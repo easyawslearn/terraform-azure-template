@@ -65,6 +65,6 @@ variable "api_gateway_name" {
 }
 
 variable "admin_user_principal" {
-  type    = string
-  default = "aws_easy_learn@hotmail.com"
+  type    = list
+  default = ["AWS_EASY_LEARN_hotmail.com#EXT#@AWSEASYLEARNhotmail.onmicrosoft.com"]
 }
