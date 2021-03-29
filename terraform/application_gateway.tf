@@ -104,10 +104,10 @@ resource "azurerm_application_gateway" "app_gateway" {
   }
 
   # step 7 - upload cert for SSL-enabled backend pool resources
-#   authentication_certificate {
-#     name = "whitelistcert1"
-#     data = azurerm_key_vault_certificate.api_mgmt_cert.certificate_data_base64
-#   }
+  #   authentication_certificate {
+  #     name = "whitelistcert1"
+  #     data = azurerm_key_vault_certificate.api_mgmt_cert.certificate_data_base64
+  #   }
 
   # step 8 - configure HTTPs backend settings for the App Gateway
   backend_http_settings {
@@ -117,9 +117,9 @@ resource "azurerm_application_gateway" "app_gateway" {
     port                  = 443
     protocol              = "Https"
     request_timeout       = 180
-    authentication_certificate {
-      name = "whitelistcert1"
-    }
+    //    authentication_certificate {
+    //      name = "whitelistcert1"
+    //    }
   }
 
   backend_http_settings {
@@ -129,9 +129,9 @@ resource "azurerm_application_gateway" "app_gateway" {
     port                  = 443
     protocol              = "Https"
     request_timeout       = 180
-    authentication_certificate {
-      name = "whitelistcert1"
-    }
+    //    authentication_certificate {
+    //      name = "whitelistcert1"
+    //    }
   }
 
   # step 9a - configure back-end IP address pool with internal IP of API-M i.e. 10.0.1.5
