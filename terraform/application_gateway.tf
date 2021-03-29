@@ -71,6 +71,7 @@ resource "azurerm_application_gateway" "app_gateway" {
     protocol                       = "Https"
     ssl_certificate_name           = "apim-gw-cert01"
     require_sni                    = true
+    host_name                      = "api7.helloapi.uk"
   }
 
   http_listener {
@@ -80,6 +81,7 @@ resource "azurerm_application_gateway" "app_gateway" {
     protocol                       = "Https"
     require_sni                    = true
     ssl_certificate_name           = "apim-portal-cert01"
+    host_name                      = "portal7.helloapi.uk"
   }
 
   # step 6 - create custom probes for API-M endpoints
