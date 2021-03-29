@@ -8,23 +8,6 @@ resource "azurerm_key_vault" "rg_keyvault" {
   purge_protection_enabled    = false
 
   sku_name = "standard"
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
-
-    key_permissions = [
-      "Get",
-    ]
-
-    secret_permissions = [
-      "Get",
-    ]
-
-    storage_permissions = [
-      "Get",
-    ]
-  }
 }
 
 resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
@@ -78,4 +61,12 @@ resource "azurerm_key_vault_certificate" "api_mgmt_cert" {
       }
     }
   }
+}
+
+
+resource "azurerm_role_assignment" "key_vault_access" {
+  name                 = "00000000-0000-0000-0000-000000000000"
+  scope                = azurerm_key_vault.rg_keyvault.id
+  role_definition_name = "Kay Vault Administrator"
+  principal_id         = data.azurerm_client_config.current.object_id
 }
