@@ -18,19 +18,19 @@ jobs:
        run: cd terraform && terraform fmt -check
        continue-on-error: false
   init:
-     name: 'terraform init'
-     runs-on: ubuntu-latest
-     steps:
+    name: 'terraform init'
+    runs-on: ubuntu-latest
+    steps:
      - uses: hashicorp/setup-terraform@v1
      - name: Terraform Init
        id: init
        run: cd terraform && terraform init
 
-   validate:
-     name: 'terraform validate'
-     runs-on: ubuntu-latest
-     steps:
-     -uses: hashicorp/setup-terraform@v1
+  validate:
+    name: 'terraform validate'
+    runs-on: ubuntu-latest
+    steps:
+     - uses: hashicorp/setup-terraform@v1
      - name: Terraform Validate
        id: validate
        run: cd terraform && terraform validate -no-color
