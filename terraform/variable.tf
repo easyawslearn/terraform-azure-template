@@ -1,5 +1,5 @@
 variable "tags" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "tags"
 }
@@ -21,7 +21,7 @@ variable "vnet_name" {
 }
 
 variable "vnet_address_space" {
-  type    = list
+  type    = list(any)
   default = ["10.0.0.0/16"]
 }
 
@@ -35,12 +35,12 @@ variable "api_gateway_subnet_name" {
 }
 
 variable "api_gateway_address_prefixes" {
-  type    = list
+  type    = list(any)
   default = ["10.0.0.0/24"]
 }
 
 variable "api_m_address_prefixes" {
-  type    = list
+  type    = list(any)
   default = ["10.0.1.0/24"]
 
 }
@@ -65,6 +65,6 @@ variable "api_gateway_name" {
 }
 
 variable "admin_user_principal" {
-  type    = list
+  type    = list(any)
   default = ["AWS_EASY_LEARN_hotmail.com#EXT#@AWSEASYLEARNhotmail.onmicrosoft.com"]
 }
