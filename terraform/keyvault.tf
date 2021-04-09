@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "rg_keyvault" {
-  name                        = "${var.resource_group_name}-key1"
+  name                        = "${var.resource_group_name}-key"
   location                    = azurerm_resource_group.resourse_grp.location
   resource_group_name         = azurerm_resource_group.resourse_grp.name
   enabled_for_disk_encryption = true
@@ -8,7 +8,27 @@ resource "azurerm_key_vault" "rg_keyvault" {
   purge_protection_enabled    = false
   enable_rbac_authorization   = true
   sku_name                    = "standard"
-  soft_delete_enabled         = false
+  soft_delete_enabled         = true
+
+   access_policy {
+    tenant_id = "${data.azurerm_client_config.current.tenant_id}"
+    object_id = "${data.azurerm_client_config.current.object_id}"
+	
+
+    key_permissions = [
+      "Get",
+      "List",
+      "Update",
+      "Create",
+      "Import",
+      "Delete",
+      "Recover",
+      "Backup",
+      "Restore"
+    ]
+
+   
+  }
 }
 
 resource "azurerm_role_assignment" "iam_access" {
